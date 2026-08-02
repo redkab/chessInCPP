@@ -8,12 +8,12 @@ int main()
 	char b[8][8] = {
 	{'r','n','b','q','k','b','n','r'},
 	{'p','p','p','p','p','p','p','p'},
-	{' ',' ',' ',' ',' ',' ',' ',' '),
-	{' ',' ',' ',' ',' ',' ',' ',' '),
-	{' ',' ',' ',' ',' ',' ',' ',' '),
-	{' ',' ',' ',' ',' ',' ',' ',' '),
-	{'P','P','P','P','P','P','P','P'),
-	{'R','N','B','Q','K','B','N','R'),	
+	{' ',' ',' ',' ',' ',' ',' ',' '},
+	{' ',' ',' ',' ',' ',' ',' ',' '},
+	{' ',' ',' ',' ',' ',' ',' ',' '},
+	{' ',' ',' ',' ',' ',' ',' ',' '},
+	{'P','P','P','P','P','P','P','P'},
+	{'R','N','B','Q','K','B','N','R'},	
 	};
     RenderWindow win(VideoMode(800, 800), "Taesef");
     int x,y;
@@ -61,6 +61,19 @@ int main()
             if(e.type == Event::Closed)
             {
                 win.close();
+            }
+
+            if(e.type == Event::MouseButtonPressed && e.mouseButton.button == Mouse::Left)
+            {
+                int row = e.mouseButton.x/100;
+                int col = e.mouseButton.y/100;
+
+                char p = b[row][col];
+                if(p == ' ')
+                {
+                    cout<<"Empty\n";
+                }
+                else cout<<"Selected "<<p<<endl;
             }
         }
         win.clear(Color::Black);
