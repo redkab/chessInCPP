@@ -1,3 +1,0 @@
-/home/saketh/chess_game/build/CMakeFiles/chess.dir
-/home/saketh/chess_game/build/CMakeFiles/edit_cache.dir
-/home/saketh/chess_game/build/CMakeFiles/rebuild_cache.dir
