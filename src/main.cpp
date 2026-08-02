@@ -65,8 +65,8 @@ int main()
 
             if(e.type == Event::MouseButtonPressed && e.mouseButton.button == Mouse::Left)
             {
-                int row = e.mouseButton.x/100;
-                int col = e.mouseButton.y/100;
+                int row = e.mouseButton.y/100;
+                int col = e.mouseButton.x/100;
 
                 char p = b[row][col];
                 if(p == ' ')
