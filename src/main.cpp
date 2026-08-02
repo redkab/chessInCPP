@@ -10,8 +10,7 @@ int main()
     rec.setSize(Vector2f(169, 167));
     rec.setOutlineColor(Color::Red);
     rec.setFillColor(Color::Blue);
-    rec.setPosition({0, 0});
-    win.draw(rec);
+    rec.setPosition({100, 0});
     while(win.isOpen())
     {
         Event e;
@@ -22,6 +21,8 @@ int main()
                 win.close();
             }
         }
+        win.clear(Color::Black);
+        win.draw(rec);
         win.display();
     }
 
