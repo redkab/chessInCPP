@@ -1,0 +1,3 @@
+/home/tawstar/chess_game/src/CMakeFiles/chess.dir
+/home/tawstar/chess_game/src/CMakeFiles/edit_cache.dir
+/home/tawstar/chess_game/src/CMakeFiles/rebuild_cache.dir

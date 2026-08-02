@@ -9,6 +9,7 @@ find_package(SFML 2.6 COMPONENTS graphics window system REQUIRED)
 
 add_executable(chess
     src/main.cpp
+    src/texspri.cpp
 )
 
 target_link_libraries(chess

@@ -1,7 +1,9 @@
+#include "texspri.h"
 #include<SFML/Graphics.hpp>
 #include<iostream>
 using namespace std;
 using namespace sf;
+
 
 int main()
 {
@@ -16,6 +18,7 @@ int main()
 	{'R','N','B','Q','K','B','N','R'},	
 	};
     RenderWindow win(VideoMode(800, 800), "Taesef");
+    loadTextures();
     int x,y;
     Color dark_green(0, 100, 0);
     Color cream(238, 238, 210);
@@ -39,18 +42,13 @@ int main()
         }
     }
 
-    Texture kingtex;
 
-    if(!kingtex.loadFromFile("../assets/pieces/black_king.png"))
-    {
-        cout<<"Error\n";
-    }
 
-    Sprite king;
-    king.setTexture(kingtex);
+if(!wKt.loadFromFile("../assets/pieces/wK.png"))
+{
+	cout<<"Error\n";
+}
 
-    king.setScale(100.0f/kingtex.getSize().x, 100.0f/kingtex.getSize().y);
-    king.setPosition(400, 300);
 
 
     while(win.isOpen())
@@ -84,7 +82,27 @@ int main()
                 win.draw(v[i][j]);
             }
         }
-        win.draw(king);
+        win.draw(wK);
+        win.draw(wQ);
+        win.draw(wN1);
+        win.draw(wN2);
+        win.draw(wB1);
+        win.draw(wB2);
+        win.draw(wR1);
+        win.draw(wR2);
+        win.draw(bK);
+        win.draw(bQ);
+        win.draw(bN1);
+        win.draw(bN2);
+        win.draw(bB1);
+        win.draw(bB2);
+        win.draw(bR1);
+        win.draw(bR2);
+        for(int i = 0; i < 8; i++){
+        	win.draw(wP[i]);
+        	win.draw(bP[i]);
+        }
+        
         win.display();
     }
 
