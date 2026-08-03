@@ -182,9 +182,9 @@ int main()
                     win.draw(*s);
                 }
 
-                win.display();
             }
 
         }
+        win.display();
     }
 }
