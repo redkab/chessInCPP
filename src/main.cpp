@@ -21,6 +21,8 @@ int main()
 	};
     RenderWindow win(VideoMode(800, 800), "Taesef");
     loadTextures();
+    vector<vector><Sprite>> objb = initializeObjVec();
+    setBoardPosition(boardObjects);
     int x,y;
     Color dark_green(0, 100, 0);
     Color cream(238, 238, 210);
@@ -85,6 +87,7 @@ int main()
 				        end = {row, col};
 				        flag = true;
 				        moveFunc(b, start, end);
+				        				   
 				   }
 				   
 		        }
@@ -96,27 +99,29 @@ int main()
 		        {
 		            win.draw(v[i][j]);
 		        }
+		        win.draw(wK);
+				win.draw(wQ);
+				win.draw(wN1);
+				win.draw(wN2);
+				win.draw(wB1);
+				win.draw(wB2);
+				win.draw(wR1);
+				win.draw(wR2);
+				win.draw(bK);
+				win.draw(bQ);
+				win.draw(bN1);
+				win.draw(bN2);
+				win.draw(bB1);
+				win.draw(bB2);
+				win.draw(bR1);
+				win.draw(bR2);
+				for(int i = 0; i < 8; i++)
+				{
+					win.draw(wP[i]);
+					win.draw(bP[i]);
+				}
 		    }
-		    win.draw(wK);
-		    win.draw(wQ);
-		    win.draw(wN1);
-		    win.draw(wN2);
-		    win.draw(wB1);
-		    win.draw(wB2);
-		    win.draw(wR1);
-		    win.draw(wR2);
-		    win.draw(bK);
-		    win.draw(bQ);
-		    win.draw(bN1);
-		    win.draw(bN2);
-		    win.draw(bB1);
-		    win.draw(bB2);
-		    win.draw(bR1);
-		    win.draw(bR2);
-		    for(int i = 0; i < 8; i++){
-		    	win.draw(wP[i]);
-		    	win.draw(bP[i]);
-		    }
+		    
 		    
 		    win.display();
 		}

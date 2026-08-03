@@ -12,6 +12,17 @@ Sprite wP[8];
 Sprite bK, bQ, bN1, bN2, bB1, bB2, bR1, bR2;
 Sprite bP[8];
 
+void setBoardPositions(vector<vector<Sprite>>& v)
+{
+    for(int row = 0; row < 8; row++)
+    {
+        for(int col = 0; col < 8; col++)
+        {
+            v[row][col].setPosition(col * 100.0f, row * 100.0f);
+        }
+    }
+}
+
 vector<vector<Sprite>> initializeObjVec()
 {
     vector<vector<Sprite>>v(8, vector<Sprite>(8));
@@ -52,7 +63,6 @@ void loadTextures()
 	}
 	wK.setTexture(wKt);
 	wK.setScale(100.0f/wKt.getSize().x, 100.0f/wKt.getSize().y);
-	wK.setPosition(400, 700);
 
 	// whitequeen
 	if(!wQt.loadFromFile("../assets/pieces/wQ.png"))
@@ -61,7 +71,7 @@ void loadTextures()
 	}
 	wQ.setTexture(wQt);
 	wQ.setScale(100.0f/wQt.getSize().x, 100.0f/wQt.getSize().y);
-	wQ.setPosition(300, 700);
+
 
 	// whiteknight1
 	if(!wNt.loadFromFile("../assets/pieces/wN.png"))
@@ -70,12 +80,12 @@ void loadTextures()
 	}
 	wN1.setTexture(wNt);
 	wN1.setScale(100.0f/wNt.getSize().x, 100.0f/wNt.getSize().y);
-	wN1.setPosition(100, 700);
+
 
 	// whiteknight2
 	wN2.setTexture(wNt);
 	wN2.setScale(100.0f/wNt.getSize().x, 100.0f/wNt.getSize().y);
-	wN2.setPosition(600, 700);
+
 
 	// whitebishop1
 	if(!wBt.loadFromFile("../assets/pieces/wB.png"))
@@ -84,12 +94,12 @@ void loadTextures()
 	}
 	wB1.setTexture(wBt);
 	wB1.setScale(100.0f/wBt.getSize().x, 100.0f/wBt.getSize().y);
-	wB1.setPosition(200, 700);
+
 
 	// whitebishop2
 	wB2.setTexture(wBt);
 	wB2.setScale(100.0f/wBt.getSize().x, 100.0f/wBt.getSize().y);
-	wB2.setPosition(500, 700);
+
 
 	// whiterook1
 	if(!wRt.loadFromFile("../assets/pieces/wR.png"))
@@ -98,12 +108,12 @@ void loadTextures()
 	}
 	wR1.setTexture(wRt);
 	wR1.setScale(100.0f/wRt.getSize().x, 100.0f/wRt.getSize().y);
-	wR1.setPosition(700, 700);
+
 
 	// whiterook2
 	wR2.setTexture(wRt);
 	wR2.setScale(100.0f/wRt.getSize().x, 100.0f/wRt.getSize().y);
-	wR2.setPosition(0, 700);
+
 
 	// whitepawns
 	if(!wPt.loadFromFile("../assets/pieces/wP.png"))
@@ -113,8 +123,7 @@ void loadTextures()
 	for(int i = 0; i < 8; i++)
 	{
 		wP[i].setTexture(wPt);
-		wP[i].setScale(100.0f/wPt.getSize().x, 100.0f/wPt.getSize().y);
-		wP[i].setPosition((float)i*100.0f, 600);
+		wP[i].setScale(100.0f/wPt.getSize().x, 100.0f/wPt.getSize().y);		
 	}
 
 	// blackking
@@ -124,7 +133,7 @@ void loadTextures()
 	}
 	bK.setTexture(bKt);
 	bK.setScale(100.0f/bKt.getSize().x, 100.0f/bKt.getSize().y);
-	bK.setPosition(400, 0);
+
 
 	// blackqueen
 	if(!bQt.loadFromFile("../assets/pieces/bQ.png"))
@@ -133,7 +142,7 @@ void loadTextures()
 	}
 	bQ.setTexture(bQt);
 	bQ.setScale(100.0f/bQt.getSize().x, 100.0f/bQt.getSize().y);
-	bQ.setPosition(300, 0);
+
 
 	// blackknight1
 	if(!bNt.loadFromFile("../assets/pieces/bN.png"))
@@ -142,12 +151,11 @@ void loadTextures()
 	}
 	bN1.setTexture(bNt);
 	bN1.setScale(100.0f/bNt.getSize().x, 100.0f/bNt.getSize().y);
-	bN1.setPosition(100, 0);
 
 	// blackknight2
 	bN2.setTexture(bNt);
 	bN2.setScale(100.0f/bNt.getSize().x, 100.0f/bNt.getSize().y);
-	bN2.setPosition(600, 0);
+
 
 	// blackbishop1
 	if(!bBt.loadFromFile("../assets/pieces/bB.png"))
@@ -156,12 +164,12 @@ void loadTextures()
 	}
 	bB1.setTexture(bBt);
 	bB1.setScale(100.0f/bBt.getSize().x, 100.0f/bBt.getSize().y);
-	bB1.setPosition(200, 0);
+
 
 	// blackbishop2
 	bB2.setTexture(bBt);
 	bB2.setScale(100.0f/bBt.getSize().x, 100.0f/bBt.getSize().y);
-	bB2.setPosition(500, 0);
+
 
 	// blackrook1
 	if(!bRt.loadFromFile("../assets/pieces/bR.png"))
@@ -170,12 +178,12 @@ void loadTextures()
 	}
 	bR1.setTexture(bRt);
 	bR1.setScale(100.0f/bRt.getSize().x, 100.0f/bRt.getSize().y);
-	bR1.setPosition(700, 0);
+
 
 	// blackrook2
 	bR2.setTexture(bRt);
 	bR2.setScale(100.0f/bRt.getSize().x, 100.0f/bRt.getSize().y);
-	bR2.setPosition(0, 0);
+
 
 	// blackpawns
 	if(!bPt.loadFromFile("../assets/pieces/bP.png"))
@@ -186,6 +194,5 @@ void loadTextures()
 	{
 		bP[i].setTexture(bPt);
 		bP[i].setScale(100.0f/bPt.getSize().x, 100.0f/bPt.getSize().y);
-		bP[i].setPosition((float)i*100.0f, 100);
 	}
 }
