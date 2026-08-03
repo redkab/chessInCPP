@@ -12,6 +12,37 @@ Sprite wP[8];
 Sprite bK, bQ, bN1, bN2, bB1, bB2, bR1, bR2;
 Sprite bP[8];
 
+vector<vector<Sprite>> initializeObjVec()
+{
+    vector<vector<Sprite>>v(8, vector<Sprite>(8));
+    v[0][0] = bR1;
+    v[0][1] = bN1;
+    v[0][2] = bB1;
+    v[0][3] = bQ;
+    v[0][4] = bK;
+    v[0][5] = bB2;
+    v[0][6] = bN2;
+    v[0][7] = bR2;
+    for(int i=0; i<8; i++)
+    {
+        v[1][i] = bP[i];
+    }
+    v[7][0] = wR1;
+    v[7][1] = wN1;
+    v[7][2] = wB1;
+    v[7][3] = wQ;
+    v[7][4] = wK;
+    v[7][5] = wB2;
+    v[7][6] = wN2;
+    v[7][7] = wR2;
+
+    for(int i=0; i<8; i++)
+    {
+        v[6][i] = wP[i];
+    }
+    return v;
+}
+
 void loadTextures()
 {
 	// whiteking
