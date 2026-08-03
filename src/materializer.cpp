@@ -1,7 +1,7 @@
 #include<iostream>
 #include "texspri.h"
 
-void renderVisualBoard(char **board)
+void renderVisualBoard(char board[8][8])
 {
     int k=0, l=0;
     for(int i=0; i<8; i++)
