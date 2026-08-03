@@ -45,6 +45,7 @@ int main()
     }
 
 
+    pair<int, int>start, end;
 	bool flag = true;
 	if(!wKt.loadFromFile("../assets/pieces/wK.png"))
 	{
@@ -64,7 +65,6 @@ int main()
 		        {
 		            int row = e.mouseButton.y/100;
 		            int col = e.mouseButton.x/100;
-		            pair<int, int>start, end;
 		            char p = b[row][col];
 		            if(flag)
 		            {
@@ -84,7 +84,7 @@ int main()
 				   		cout<<"end Selected "<<p<<endl;
 				        end = {row, col};
 				        flag = true;
-				        moveFunc(b, start, end)
+				        moveFunc(b, start, end);
 				   }
 				   
 		        }
