@@ -1,4 +1,5 @@
 #include "texspri.h"
+#include "move_func.h"
 #include<SFML/Graphics.hpp>
 #include<iostream>
 //#include "materializer.h"
@@ -44,67 +45,80 @@ int main()
     }
 
 
-
-if(!wKt.loadFromFile("../assets/pieces/wK.png"))
-{
-	cout<<"Error\n";
-}
-
-
-
-    while(win.isOpen())
-    {
-        Event e;
-        while(win.pollEvent(e))
-        {
-            if(e.type == Event::Closed)
-            {
-                win.close();
-            }
-
-            if(e.type == Event::MouseButtonPressed && e.mouseButton.button == Mouse::Left)
-            {
-                int row = e.mouseButton.y/100;
-                int col = e.mouseButton.x/100;
-
-                char p = b[row][col];
-                if(p == ' ')
-                {
-                    cout<<"Empty\n";
-                }
-                else cout<<"Selected "<<p<<endl;
-            }
-        }
-        win.clear(Color::Black);
-        for(int i=0; i<8; i++)
-        {
-            for(int j=0; j<8; j++)
-            {
-                win.draw(v[i][j]);
-            }
-        }
-        win.draw(wK);
-        win.draw(wQ);
-        win.draw(wN1);
-        win.draw(wN2);
-        win.draw(wB1);
-        win.draw(wB2);
-        win.draw(wR1);
-        win.draw(wR2);
-        win.draw(bK);
-        win.draw(bQ);
-        win.draw(bN1);
-        win.draw(bN2);
-        win.draw(bB1);
-        win.draw(bB2);
-        win.draw(bR1);
-        win.draw(bR2);
-        for(int i = 0; i < 8; i++){
-        	win.draw(wP[i]);
-        	win.draw(bP[i]);
-        }
-        
-        win.display();
-    }
+	bool flag = true;
+	if(!wKt.loadFromFile("../assets/pieces/wK.png"))
+	{
+		cout<<"Error\n";
+	}
+		while(win.isOpen())
+		{
+		    Event e;
+		    while(win.pollEvent(e))
+		    {
+		        if(e.type == Event::Closed)
+		        {
+		            win.close();
+		        }
+				
+		        if(e.type == Event::MouseButtonPressed && e.mouseButton.button == Mouse::Left)
+		        {
+		            int row = e.mouseButton.y/100;
+		            int col = e.mouseButton.x/100;
+		            pair<int, int>start, end;
+		            char p = b[row][col];
+		            if(flag)
+		            {
+				        if(p == ' ')
+				        {
+				            cout<<"Empty\n";
+				        }
+				        else 
+				        {
+				        	cout<<"start Selected "<<p<<endl;
+				        	start = {row, col};   
+				        	flag = false;    	
+				        }
+				   }
+				   else
+				   {
+				   		cout<<"end Selected "<<p<<endl;
+				        end = {row, col};
+				        flag = true;
+				        moveFunc(b, start, end)
+				   }
+				   
+		        }
+		    }
+		    win.clear(Color::Black);
+		    for(int i=0; i<8; i++)
+		    {
+		        for(int j=0; j<8; j++)
+		        {
+		            win.draw(v[i][j]);
+		        }
+		    }
+		    win.draw(wK);
+		    win.draw(wQ);
+		    win.draw(wN1);
+		    win.draw(wN2);
+		    win.draw(wB1);
+		    win.draw(wB2);
+		    win.draw(wR1);
+		    win.draw(wR2);
+		    win.draw(bK);
+		    win.draw(bQ);
+		    win.draw(bN1);
+		    win.draw(bN2);
+		    win.draw(bB1);
+		    win.draw(bB2);
+		    win.draw(bR1);
+		    win.draw(bR2);
+		    for(int i = 0; i < 8; i++){
+		    	win.draw(wP[i]);
+		    	win.draw(bP[i]);
+		    }
+		    
+		    win.display();
+		}
 
 }
