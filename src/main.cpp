@@ -47,10 +47,6 @@ int main()
 
     pair<int, int>start, end;
     bool flag = true;
-    if(!wKt.loadFromFile("../assets/pieces/wK.png"))
-    {
-        cout<<"Error\n";
-    }
     while(win.isOpen())
     {
         Event e;
@@ -65,6 +61,10 @@ int main()
             {
                 int row = e.mouseButton.y/100;
                 int col = e.mouseButton.x/100;
+                if(row>=8 || row <0 || col >=8 || col <0)
+                {
+                    continue;
+                }
                 char p = b[row][col];
                 if(flag)
                 {
