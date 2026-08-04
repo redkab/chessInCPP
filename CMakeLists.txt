@@ -11,6 +11,7 @@ add_executable(chess
     src/main.cpp
     src/texspri.cpp
     src/move_func.cpp
+    src/move_rules.cpp
 )
 
 target_link_libraries(chess
