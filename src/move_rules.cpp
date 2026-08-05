@@ -21,3 +21,13 @@ bool isValidKnightMove(pair<int, int>start, pair<int, int>end)
 {
 	return (abs(end.first - start.first) == 2 && abs(end.second - start.second) == 1) || (abs(end.first - start.first) == 1 && abs(end.second - start.second) == 2);
 }
+
+bool isValidKingMove(pair<int, int>start, pair<int, int>end)
+{
+	return ((abs(end.first - start.first) == 1 || abs(end.first - start.first) == 0) && (abs(end.second - start.second) == 1 || abs(end.second - start.second) == 0));
+}
+
+bool isValidBishopMove(pair<int, int>start, pair<int, int>end)
+{
+	return 
+}
