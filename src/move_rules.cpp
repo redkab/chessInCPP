@@ -65,7 +65,7 @@ bool isValidBishopMove(char board[8][8], pair<int, int>start, pair<int, int>end)
     {
         row += delr;
         col += delc;
-        if(board[row][col] != '.')return false;
+        if(board[row][col] != ' ')return false;
     }
     return true;
 }
