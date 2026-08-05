@@ -27,7 +27,36 @@ bool isValidKingMove(pair<int, int>start, pair<int, int>end)
 	return ((abs(end.first - start.first) == 1 || abs(end.first - start.first) == 0) && (abs(end.second - start.second) == 1 || abs(end.second - start.second) == 0));
 }
 
-bool isValidBishopMove(pair<int, int>start, pair<int, int>end)
+bool isValidBishopMove(char board[8][8], pair<int, int>start, pair<int, int>end)
 {
-	return 
+	bool flag = true;
+	if(abs(end.first - start.first) == (abs(end.second - start.second))
+	{
+		
+		for(int x = 0, int y = 0; i < abs(end.first - start.first);)
+		{	
+			if (board[x][y] == ' ') 
+			{
+				flag = true;
+			}
+			else
+			{	
+				flag = false;
+				break;
+			}
+			if(end.first - start.first > 0)
+			{
+				x++;
+			}
+			else
+			{
+				x--;
+			}
+			if()
+		
+		}
+	}
+	
+	return flag;
+	
 }
