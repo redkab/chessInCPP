@@ -19,12 +19,12 @@ bool isTeam(char p, char q)
 
 bool isValidKnightMove(pair<int, int>start, pair<int, int>end)
 {
-	return (abs(end.first - start.first) == 2 && abs(end.second - start.second) == 1) || (abs(end.first - start.first) == 1 && abs(end.second - start.second) == 2);
+    return (abs(end.first - start.first) == 2 && abs(end.second - start.second) == 1) || (abs(end.first - start.first) == 1 && abs(end.second - start.second) == 2);
 }
 
 bool isValidKingMove(pair<int, int>start, pair<int, int>end)
 {
-	return ((abs(end.first - start.first) == 1 || abs(end.first - start.first) == 0) && (abs(end.second - start.second) == 1 || abs(end.second - start.second) == 0));
+    return ((abs(end.first - start.first) == 1 || abs(end.first - start.first) == 0) && (abs(end.second - start.second) == 1 || abs(end.second - start.second) == 0));
 }
 
 bool isValidBishopMove(char board[8][8], pair<int, int>start, pair<int, int>end)
@@ -61,12 +61,17 @@ bool isValidBishopMove(char board[8][8], pair<int, int>start, pair<int, int>end)
     }
 
     int row=start.first, col = start.second;
-    while(row != end.first && col != end.second)
+    while (row != end.first || col != end.second)
     {
+        if (board[row][col] != ' ')
+        {
+            return false;
+        }
+
         row += delr;
         col += delc;
-        if(board[row][col] != ' ')return false;
     }
+
     return true;
 }
 
