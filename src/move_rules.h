@@ -5,9 +5,9 @@
 #include<cmath>
 
 bool isLegal(char board[8][8], std::pair<int, int>start, std::pair<int, int>end);
-bool isWhite(char w);
-bool isBlack(char b);
+bool isWhite(char p);
+bool isBlack(char p);
 bool isTeam(char p, char q);
-bool isValidKnightMove(pair<int, int>start, pair<int, int>end);
+bool isValidKnightMove(std::pair<int, int>start, std::pair<int, int>end);
 
 #endif

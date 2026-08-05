@@ -29,34 +29,45 @@ bool isValidKingMove(pair<int, int>start, pair<int, int>end)
 
 bool isValidBishopMove(char board[8][8], pair<int, int>start, pair<int, int>end)
 {
-	bool flag = true;
-	if(abs(end.first - start.first) == (abs(end.second - start.second))
-	{
-		
-		for(int x = 0, int y = 0; i < abs(end.first - start.first);)
-		{	
-			if (board[x][y] == ' ') 
-			{
-				flag = true;
-			}
-			else
-			{	
-				flag = false;
-				break;
-			}
-			if(end.first - start.first > 0)
-			{
-				x++;
-			}
-			else
-			{
-				x--;
-			}
-			if()
-		
-		}
-	}
-	
-	return flag;
-	
+    if(abs(start.first - end.first) != abs(end.second - start.second))return false;
+    int dr, dc;
+    dr = end.first - start.first;
+    dc = end.second - start.second;
+    int q;
+
+    if(dr<0 && dc>0)q=1;
+    if(dr<0 && dc<0)q=2;
+    if(dr>0 && dc<0)q=3;
+    if(dr>0 && dc>0)q=4;
+    int delr, delc;
+    switch(q)
+    {
+        case 1:
+            delr = -1;
+            delc = 1;
+            break;
+        case 2:
+            delr = -1;
+            delc = -1;
+            break;
+        case 3:
+            delr = 1;
+            delc = -1;
+            break;
+        case 4:
+            delr = 1;
+            delc = 1;
+            break;
+    }
+
+    int row=start.first, col = start.second;
+    while(row != end.first && col != end.second)
+    {
+        row += delr;
+        col += delc;
+        if(board[row][col] != '.')return false;
+    }
+    return true;
 }
+
+
