@@ -130,36 +130,188 @@ bool isLegal(char b[8][8], pair<int, int>start, pair<int ,int>end)
 
     char piece = b[start.first][start.second];
     if(isTeam(piece, b[end.first][end.second]))return false;
-
+    bool valid;
 
     switch(piece)
     {
         case 'R':
         case 'r':
-            return isValidRookMove(b, start, end);
+            valid =  isValidRookMove(b, start, end);
+            break;
 
         case 'N':
         case 'n':
-            return isValidKnightMove(b, start, end);
+            valid =  isValidKnightMove(b, start, end);
+            break;
 
         case 'B':
         case 'b':
-            return isValidBishopMove(b, start, end);
+            valid =  isValidBishopMove(b, start, end);
+            break;
 
         case 'Q':
         case 'q':
-            return isValidQueenMove(b, start, end);
+            valid =  isValidQueenMove(b, start, end);
+            break;
 
         case 'K':
         case 'k':
-            return isValidKingMove(b, start, end);
+            valid = isValidKingMove(b, start, end);
+            break;
 
         case 'P':
         case 'p':
-            return isValidPawnMove(b, start, end);
-
+            valid =  isValidPawnMove(b, start, end);
+            break
         default:
-            return false;
+                return false;
     }
 }
+
+bool isInCheck(char board[8][8], bool colour)// false = black, true = white
+{
+    int dr[4] = {0, 0, 1, -1};
+    int dc[4] = {1, -1, 0, 0};
+    int r, c;
+    char search, ek;
+    if(colour)
+    {
+        search = 'K';
+        ek = 'k';
+    }
+    else
+    {
+        search = 'k';
+        ek = 'K';
+    }
+    bool flag;
+    for(int i=0; i<8; i++)
+    {
+        for(int j=0; j<8; j++)
+        {
+            if(board[i][j] == search)
+            {
+                r = i;
+                c = j;
+                flag = 1;
+                break;
+            }
+        }
+        if(flag)break;
+    }
+    int ur=r, uc=c;
+    for(int i=0; i<4; i++)
+    {
+        int nr = r + dr[i];
+        int nc = c + dc[i];
+        if(nr>=0 && nr<8 && nc>=0 && nc<8)
+        {
+            if(board[nr][nc] == ek)return true;
+        }
+    }
+
+    if(colour)
+    {
+        if(r-1 >=0 && r-1 <8 && c-1 >=0 && c-1<8)
+        {
+            if(board[r-1][c-1] == 'p')return true;
+        }
+        if(r-1>=0 && r-1<8 && c+1>=0 && c+1<8)
+        {
+            if(board[r-1][c+1] == 'p')return true;
+        }
+    }
+
+    else
+    {
+        if(r+1 >=0 && r+1 <8 && c-1 >=0 && c-1<8)
+        {
+            if(board[r+1][c-1] == 'P')return true;
+        }
+        if(r+1>=0 && r+1<8 && c+1>=0 && c+1<8)
+        {
+            if(board[r+1][c+1] == 'P')return true;
+        }
+    }
+
+    for(int i=0; i<4; i++)
+    {
+        r += dr[i];
+        c += dc[i];
+        while(r>=0 && r<8 && c>=0 && c<8)
+        {
+            char p = board[r][c];
+            if(p != ' ' && isTeam(p, search))break;
+            if(p!= ' ' && !isTeam(p, search))
+            {
+                if(colour)
+                {
+                    if(p == 'p' || p == 'n' || p == 'b')break;
+                    if(p == 'q' || p == 'r')return true;
+                }
+                else
+                {
+                    if(p == 'P' || p == 'N' || p == 'B')break;
+                    if(p == 'Q' || p == 'R')return true;
+                }
+            }
+            r += dr[i];
+            c += dc[i];
+        }
+    }
+    r=ur;
+    c=uc;
+
+    int dgr[4] = {1, 1, -1, -1};
+    int dgc[4] = {-1, 1, -1, 1};
+
+    for(int i=0; i<4; i++)
+    {
+        r += dgr[i];
+        c += dgc[i];
+
+        while(r>=0 && r<8 && c>=0 && c<8)
+        {
+            char p = board[r][c];
+            if(p != ' ' && isTeam(p, search))break;
+            if(p!= ' ' && !isTeam(p, search))
+            {
+                if(colour)
+                {
+                    if(p == 'r' || p == 'n')break;
+                    if(p == 'q' || p == 'b')return true;
+                }
+                else
+                {
+                    if(p == 'R' || p == 'N')break;
+                    if(p == 'Q' || p == 'B')return true;
+                }
+            }
+            r += dgr[i];
+            c += dgc[i];
+        }
+    }
+    r=ur;
+    c=uc;
+
+    int dnr[8] = {-2, -2, -1, -1, 1, 1, 2, 2};
+    int dnc[8] = {-1, 1, -2, 2, -1, 2, -1, 1};
+
+    for(int i=0; i<8; i++)
+    {
+        int nr = r + dnr[i];
+        int nc = c + dnc[i];
+        if(nr>=0 && nr<8 && nc>=0 && nc<8)
+        {
+            if(colour)
+            {
+                if(board[nr][nc] == 'n')return true;
+            }
+            else if(board[nr][nc] == 'N')return true;
+        }
+    }
+
+    return false;
+}
+
 
