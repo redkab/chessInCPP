@@ -288,12 +288,12 @@ bool isInCheck(char board[8][8], bool colour)// false = black, true = white
             {
                 if(colour)
                 {
-                    if(p == 'r' || p == 'n' || p == 'k')break;
+                    if(p == 'r' || p == 'n' || p == 'k' || p == 'p')break;
                     if(p == 'q' || p == 'b')return true;
                 }
                 else
                 {
-                    if(p == 'R' || p == 'N' || p == 'K')break;
+                    if(p == 'R' || p == 'N' || p == 'K' || p == 'P')break;
                     if(p == 'Q' || p == 'B')return true;
                 }
             }
