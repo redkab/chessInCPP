@@ -21,7 +21,7 @@ bool isTeam(char p, char q)
     return (p>='A' && p<='Z')&&(q>='A' && q<='Z') || (p>='a' && p<='z') && (q>='a' && q<='z');
 }
 
-bool isValidKnightMove(pair<int, int>start, pair<int, int>end)
+bool isValidKnightMove(char board[8][8], pair<int, int>start, pair<int, int>end)
 {
     return (abs(end.first - start.first) == 2 && abs(end.second - start.second) == 1) || (abs(end.first - start.first) == 1 && abs(end.second - start.second) == 2);
 }
@@ -88,35 +88,40 @@ bool isValidQueenMove(char board[8][8], pair<int, int>start, pair<int, int>end)
 
 bool isValidPawnMove(char board[8][8], pair<int, int>start, pair<int, int>end)
 {
-    int dr, dc;
-    if(end.first - start.first != -1 || end.first - start.first != -2 || abs(end.second - start.second) != 1)return false;
-    if(isWhite(board[start.first][start.second]))
-    {
-        if(start.first == 6)
-        {
-            dr = -2;
-            dc = 0;
-        }
-        else dr = -1;
-        if(isBlack(board[end.first][end.second]))
-        {
-            dc = end.second - start.second;
-        }
-    }
-    
+    int dr, dc, exdr, exdc;
+    dr = end.first - start.first;
+    dc = end.second - start.second;
+    char pawn = board[start.first][start.second];
+    char dest = board[end.first][end.second];
+
+    int dir, sr;
     if(isBlack(board[start.first][start.second]))
     {
-        if(start.first == 6)
-        {
-            dr = 2;
-            dc = 0;
-        }
-        else dr = 1;
-        if(isWhite(board[end.first][end.second]))
-        {
-            dc = end.second - start.second;
-        }
+        sr = 1;
+        dir = 1;
+    }
+    else
+    {
+        sr = 6;
+        dir = -1;
     }
 
-    return (dr == end.first - start.first) && (dc == end.second - start.second);
+    if( dc == 0 && dr == dir && dest == ' ')
+    {
+        return true;
+    }
+
+    if(start.first == sr && (dr == 2*dir || dr == dir))
+    {
+        return true;
+    }
+
+    if(dest != ' ' && dr == dir && abs(dc) == 1)
+    {
+        return true;
+    }
+
+    return false;
 }
+
+
