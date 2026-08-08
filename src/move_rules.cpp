@@ -37,33 +37,8 @@ bool isValidBishopMove(char board[8][8], pair<int, int>start, pair<int, int>end)
     int dr, dc;
     dr = end.first - start.first;
     dc = end.second - start.second;
-    int q;
-
-    if(dr<0 && dc>0)q=1;
-    if(dr<0 && dc<0)q=2;
-    if(dr>0 && dc<0)q=3;
-    if(dr>0 && dc>0)q=4;
-    int delr, delc;
-    switch(q)
-    {
-        case 1:
-            delr = -1;
-            delc = 1;
-            break;
-        case 2:
-            delr = -1;
-            delc = -1;
-            break;
-        case 3:
-            delr = 1;
-            delc = -1;
-            break;
-        case 4:
-            delr = 1;
-            delc = 1;
-            break;
-    }
-
+    int delr = sgn(dr);
+    int delc = sgn(dc);
     int row=start.first, col = start.second;
     while (row + delr != end.first && col +delc != end.second)
     {
