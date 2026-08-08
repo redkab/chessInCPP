@@ -9,5 +9,5 @@ bool isWhite(char p);
 bool isBlack(char p);
 bool isTeam(char p, char q);
 bool isValidKnightMove(std::pair<int, int>start, std::pair<int, int>end);
-
+int sgn(int x);
 #endif
