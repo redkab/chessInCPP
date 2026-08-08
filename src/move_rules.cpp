@@ -162,7 +162,7 @@ bool isLegal(char b[8][8], pair<int, int>start, pair<int ,int>end)
         case 'P':
         case 'p':
             valid =  isValidPawnMove(b, start, end);
-            break
+            break;
         default:
                 return false;
     }
