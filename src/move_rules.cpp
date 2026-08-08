@@ -88,11 +88,12 @@ bool isValidQueenMove(char board[8][8], pair<int, int>start, pair<int, int>end)
 
 bool isValidPawnMove(char board[8][8], pair<int, int>start, pair<int, int>end)
 {
-    int dr, dc, exdr, exdc;
+    int dr, dc;
     dr = end.first - start.first;
     dc = end.second - start.second;
     char pawn = board[start.first][start.second];
     char dest = board[end.first][end.second];
+    if((isBlack(pawn) && isWhite(dest)) || (isWhite(pawn) && isBlack(dest)))return false;
 
     int dir, sr;
     if(isBlack(board[start.first][start.second]))
@@ -111,7 +112,7 @@ bool isValidPawnMove(char board[8][8], pair<int, int>start, pair<int, int>end)
         return true;
     }
 
-    if(start.first == sr && (dr == 2*dir || dr == dir))
+    if(start.first == sr && (dr == 2*dir || dr == dir) && dc==0)
     {
         return true;
     }
