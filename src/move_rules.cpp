@@ -26,7 +26,7 @@ bool isValidKnightMove(char board[8][8], pair<int, int>start, pair<int, int>end)
     return (abs(end.first - start.first) == 2 && abs(end.second - start.second) == 1) || (abs(end.first - start.first) == 1 && abs(end.second - start.second) == 2);
 }
 
-bool isValidKingMove(pair<int, int>start, pair<int, int>end)
+bool isValidKingMove(char board[8][8], pair<int, int>start, pair<int, int>end)
 {
     return ((abs(end.first - start.first) == 1 || abs(end.first - start.first) == 0) && (abs(end.second - start.second) == 1 || abs(end.second - start.second) == 0));
 }
@@ -117,11 +117,47 @@ bool isValidPawnMove(char board[8][8], pair<int, int>start, pair<int, int>end)
 
     if(dest != ' ' && dr == dir && abs(dc) == 1)
     {
-        if((isBlack(pawn) && isBlack(dest)) || (isWhite(pawn) && isWhite(dest)))return false;
+        if(isTeam(pawn, dest))return false;
         return true;
     }
 
     return false;
 }
 
+bool isLegal(char b[8][8], pair<int, int>start, pair<int ,int>end)
+{
+    if(start == end)return false;
+
+    char piece = b[start.first][start.second];
+
+    switch(piece)
+    {
+        case 'R':
+        case 'r':
+            return isValidRookMove(b, start, end);
+
+        case 'N':
+        case 'n':
+            return isValidKnightMove(b, start, end);
+
+        case 'B':
+        case 'b':
+            return isValidBishopMove(b, start, end);
+
+        case 'Q':
+        case 'q':
+            return isValidQueenMove(b, start, end);
+
+        case 'K':
+        case 'k':
+            return isValidKingMove(b, start, end);
+
+        case 'P':
+        case 'p':
+            return isValidPawnMove(b, start, end);
+
+        default:
+            return false;
+    }
+}
 
