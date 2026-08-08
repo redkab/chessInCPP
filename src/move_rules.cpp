@@ -86,3 +86,37 @@ bool isValidQueenMove(char board[8][8], pair<int, int>start, pair<int, int>end)
     return isValidRookMove(board, start, end) || isValidBishopMove(board, start, end);
 }
 
+bool isValidPawnMove(char board[8][8], pair<int, int>start, pair<int, int>end)
+{
+    int dr, dc;
+    if(end.first - start.first != -1 || end.first - start.first != -2 || abs(end.second - start.second) != 1)return false;
+    if(isWhite(board[start.first][start.second]))
+    {
+        if(start.first == 6)
+        {
+            dr = -2;
+            dc = 0;
+        }
+        else dr = -1;
+        if(isBlack(board[end.first][end.second]))
+        {
+            dc = end.second - start.second;
+        }
+    }
+    
+    if(isBlack(board[start.first][start.second]))
+    {
+        if(start.first == 6)
+        {
+            dr = 2;
+            dc = 0;
+        }
+        else dr = 1;
+        if(isWhite(board[end.first][end.second]))
+        {
+            dc = end.second - start.second;
+        }
+    }
+
+    return (dr == end.first - start.first) && (dc == end.second - start.second);
+}
