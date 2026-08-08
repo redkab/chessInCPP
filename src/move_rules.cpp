@@ -184,7 +184,7 @@ bool isInCheck(char board[8][8], bool colour)// false = black, true = white
         search = 'k';
         ek = 'K';
     }
-    bool flag;
+    bool flag=0;
     for(int i=0; i<8; i++)
     {
         for(int j=0; j<8; j++)
@@ -236,8 +236,8 @@ bool isInCheck(char board[8][8], bool colour)// false = black, true = white
 
     for(int i=0; i<4; i++)
     {
-        r += dr[i];
-        c += dc[i];
+        r = ur + dr[i];
+        c = uc + dc[i];
         while(r>=0 && r<8 && c>=0 && c<8)
         {
             char p = board[r][c];
@@ -246,12 +246,12 @@ bool isInCheck(char board[8][8], bool colour)// false = black, true = white
             {
                 if(colour)
                 {
-                    if(p == 'p' || p == 'n' || p == 'b')break;
+                    if(p == 'p' || p == 'n' || p == 'b' || p == 'k')break;
                     if(p == 'q' || p == 'r')return true;
                 }
                 else
                 {
-                    if(p == 'P' || p == 'N' || p == 'B')break;
+                    if(p == 'P' || p == 'N' || p == 'B' || p == 'K')break;
                     if(p == 'Q' || p == 'R')return true;
                 }
             }
@@ -267,8 +267,18 @@ bool isInCheck(char board[8][8], bool colour)// false = black, true = white
 
     for(int i=0; i<4; i++)
     {
-        r += dgr[i];
-        c += dgc[i];
+        int nr = r + dgr[i];
+        int nc = c + dgc[i];
+        if(nr>=0 && nr<8 && nc>=0 && nc<8)
+        {
+            if(board[nr][nc] == ek)return true;
+        }
+    }
+
+    for(int i=0; i<4; i++)
+    {
+        r = ur + dgr[i];
+        c = uc + dgc[i];
 
         while(r>=0 && r<8 && c>=0 && c<8)
         {
@@ -278,12 +288,12 @@ bool isInCheck(char board[8][8], bool colour)// false = black, true = white
             {
                 if(colour)
                 {
-                    if(p == 'r' || p == 'n')break;
+                    if(p == 'r' || p == 'n' || p == 'k')break;
                     if(p == 'q' || p == 'b')return true;
                 }
                 else
                 {
-                    if(p == 'R' || p == 'N')break;
+                    if(p == 'R' || p == 'N' || p == 'K')break;
                     if(p == 'Q' || p == 'B')return true;
                 }
             }
@@ -295,7 +305,7 @@ bool isInCheck(char board[8][8], bool colour)// false = black, true = white
     c=uc;
 
     int dnr[8] = {-2, -2, -1, -1, 1, 1, 2, 2};
-    int dnc[8] = {-1, 1, -2, 2, -1, 2, -1, 1};
+    int dnc[8] = {-1, 1, -2, 2, -2, 2, -1, 1};
 
     for(int i=0; i<8; i++)
     {
