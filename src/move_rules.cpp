@@ -2,6 +2,10 @@
 #include <utility>
 #include <cmath>
 using namespace std;
+int sgn(int x)
+{
+    return (x>0) - (x<0);
+}
 bool isBlack(char p)
 {
     return p>='a' && p<='z';
@@ -61,17 +65,44 @@ bool isValidBishopMove(char board[8][8], pair<int, int>start, pair<int, int>end)
     }
 
     int row=start.first, col = start.second;
-    while (row != end.first || col != end.second)
+    while (row + delr != end.first && col +delc != end.second)
     {
-        if (board[row][col] != ' ')
-        {
-            return false;
-        }
-
         row += delr;
         col += delc;
+        if(board[row][col] != ' ')return false;
+    }
+    if(isTeam(board[start.first][start.second], board[end.first][end.second]))return false;
+    return true;
+}
+
+bool isValidRookMove(char board[8][8], pair<int, int>start, pair<int, int>end)
+{
+    int dr, dc;
+    if(!(start.first == end.first || start.second == end.second))
+    {
+        return false;
     }
 
+    int r=start.first, c=start.second;
+    if(isTeam(board[r][c], board[end.first][end.second]))return false;
+    if(start.first == end.first)
+    {
+        dr=0;
+        dc=sgn(end.second - start.second);
+    }
+    else
+    {
+        dr = sgn(end.first - start.first);
+        dc=0;
+    }
+    r +=dr;
+    c+=dc;
+    while(r+dr != end.first || c+dc != end.second)
+    {
+        if(board[r][c] == ' ')return false;
+        r = r+dr;
+        c = c+dc;
+    }
     return true;
 }
 
