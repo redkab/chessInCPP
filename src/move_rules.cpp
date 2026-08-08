@@ -97,13 +97,17 @@ bool isValidRookMove(char board[8][8], pair<int, int>start, pair<int, int>end)
     }
     r +=dr;
     c+=dc;
-    while(r+dr != end.first || c+dc != end.second)
+    while(r != end.first || c != end.second)
     {
-        if(board[r][c] == ' ')return false;
+        if(board[r][c] != ' ')return false;
         r = r+dr;
         c = c+dc;
     }
     return true;
 }
 
+bool isValidQueenMove(char board[8][8], pair<int, int>start, pair<int, int>end)
+{
+    return isValidRookMove(board, start, end) || isValidBishopMove(board, start, end);
+}
 
