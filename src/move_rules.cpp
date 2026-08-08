@@ -93,8 +93,6 @@ bool isValidPawnMove(char board[8][8], pair<int, int>start, pair<int, int>end)
     dc = end.second - start.second;
     char pawn = board[start.first][start.second];
     char dest = board[end.first][end.second];
-    if((isBlack(pawn) && isWhite(dest)) || (isWhite(pawn) && isBlack(dest)))return false;
-
     int dir, sr;
     if(isBlack(board[start.first][start.second]))
     {
@@ -112,13 +110,14 @@ bool isValidPawnMove(char board[8][8], pair<int, int>start, pair<int, int>end)
         return true;
     }
 
-    if(start.first == sr && (dr == 2*dir || dr == dir) && dc==0)
+    if(start.first == sr && dr == 2*dir && dc==0  && board[start.first + dir][start.second] == ' ' && dest == ' ')
     {
         return true;
     }
 
     if(dest != ' ' && dr == dir && abs(dc) == 1)
     {
+        if((isBlack(pawn) && isBlack(dest)) || (isWhite(pawn) && isWhite(dest)))return false;
         return true;
     }
 
