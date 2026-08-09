@@ -485,5 +485,27 @@ bool isCheckmate(char board[8][8], bool colour)//false = black, true = white
     return true;
 }
 
+bool isStalemate(char board[8][8], bool colour)
+{
+    char t;
+    if(colour)t = 'K';
+    else t = 'k';
+    if(isInCheck(board, colour))return false;
+
+    for(int i=0; i<8; i++)
+    {
+        for(int j=0; j<8; j++)
+        {
+            if(isTeam(t, board[i][j]))
+            {
+                if(hasLegalMoves(board, {i,j}))
+                {
+                    return false;
+                }
+            }
+        }
+    }
+    return true;
+}
 
 
