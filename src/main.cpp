@@ -2,6 +2,7 @@
 #include "move_func.h"
 #include<SFML/Graphics.hpp>
 #include<iostream>
+#include "move_rules.h"
 //#include "materializer.h"
 using namespace std;
 using namespace sf;
@@ -84,7 +85,12 @@ int main()
                     cout<<"end Selected "<<p<<endl;
                     end = {row, col};
                     flag = true;
-                    moveFunc(b, start, end);
+                    if(isLegal(b, start, end))moveFunc(b, start, end);
+                    else
+                    {
+                        cout<<"Illegal"<<endl;
+                        //grafiks
+                    }
                 }
 
             }
