@@ -23,11 +23,13 @@ bool isTeam(char p, char q)
 
 bool isValidKnightMove(char board[8][8], pair<int, int>start, pair<int, int>end)
 {
+    if(isTeam(board[start.first][start.second], board[end.first][end.second]))return false;
     return (abs(end.first - start.first) == 2 && abs(end.second - start.second) == 1) || (abs(end.first - start.first) == 1 && abs(end.second - start.second) == 2);
 }
 
 bool isValidKingMove(char board[8][8], pair<int, int>start, pair<int, int>end)
 {
+    if(isTeam(board[start.first][start.second], board[end.first][end.second]))return false;
     return ((abs(end.first - start.first) == 1 || abs(end.first - start.first) == 0) && (abs(end.second - start.second) == 1 || abs(end.second - start.second) == 0));
 }
 
@@ -52,6 +54,7 @@ bool isValidBishopMove(char board[8][8], pair<int, int>start, pair<int, int>end)
 
 bool isValidRookMove(char board[8][8], pair<int, int>start, pair<int, int>end)
 {
+    if(isTeam(board[start.first][start.second], board[end.first][end.second]))return false;
     int dr, dc;
     if(!(start.first == end.first || start.second == end.second))
     {
@@ -166,6 +169,7 @@ bool isLegal(char b[8][8], pair<int, int>start, pair<int ,int>end)
         default:
                 return false;
     }
+    return valid;
 }
 
 bool isInCheck(char board[8][8], bool colour)// false = black, true = white
