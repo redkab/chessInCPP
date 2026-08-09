@@ -17,4 +17,5 @@ bool isValidBishopMove(char board[8][8], std::pair<int, int>start, std::pair<int
 int sgn(int x);
 bool isLegal(char board[8][8], std::pair<int, int>start, std::pair<int, int>end);
 bool isInCheck(char board[8][8], bool colour);
+bool hasLegalMoves(char board[8][8], std::pair<int, int>start);
 #endif
