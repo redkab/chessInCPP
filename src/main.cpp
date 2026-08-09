@@ -86,7 +86,7 @@ int main()
                     cout<<"end Selected "<<p<<endl;
                     end = {row, col};
                     flag = true;
-                    if(isLegal(b, start, end) && turn)
+                    if(isLegal(b, start, end))
                     {
 		                
 		                if(turn && isWhite(b[start.first][start.second]))
