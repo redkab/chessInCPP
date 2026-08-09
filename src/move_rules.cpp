@@ -168,7 +168,7 @@ bool isLegal(char b[8][8], pair<int, int>start, pair<int ,int>end)
             valid =  isValidPawnMove(b, start, end);
             break;
         default:
-                return false;
+            return false;
     }
     if(!valid)return false;
 
@@ -182,7 +182,7 @@ bool isLegal(char b[8][8], pair<int, int>start, pair<int ,int>end)
     }
     bool colour;
     colour = isWhite(piece);
-    
+
     tempBoard[end.first][end.second] = tempBoard[start.first][start.second];
     tempBoard[start.first][start.second] = ' ';
     if(isInCheck(tempBoard, colour))return false;
@@ -461,3 +461,29 @@ bool hasLegalMoves(char board[8][8], pair<int, int>start)
     }
     return false;
 }
+
+bool isCheckmate(char board[8][8], bool colour)//false = black, true = white
+{
+    char t;
+    if(colour)t = 'K';
+    else t = 'k';
+    if(!isInCheck(board, colour))return false;
+
+    for(int i=0; i<8; i++)
+    {
+        for(int j=0; j<8; j++)
+        {
+            if(isTeam(t, board[i][j]))
+            {
+                if(hasLegalMoves(board, {i,j}))
+                {
+                    return false;
+                }
+            }
+        }
+    }
+    return true;
+}
+
+
+
