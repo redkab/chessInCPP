@@ -15,5 +15,5 @@ bool isValidQueenMove(char board[8][8], std::pair<int, int>start, std::pair<int,
 bool isValidPawnMove(char board[8][8], std::pair<int, int>start, std::pair<int, int>end);
 bool isValidBishopMove(char board[8][8], std::pair<int, int>start, std::pair<int, int>end);
 int sgn(int x);
-bool isInCheck(char board[8][8], bool colour)
+bool isInCheck(char board[8][8], bool colour);
 #endif
