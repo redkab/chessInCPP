@@ -49,6 +49,7 @@ int main()
     pair<int, int>start, end;
     bool flag = true;
     bool turn = true;
+    bool over = false;
     while(win.isOpen())
     {
         Event e;
@@ -92,11 +93,35 @@ int main()
 		                if(turn && isWhite(b[start.first][start.second]))
 		                {
 		                	moveFunc(b, start, end);
+                            if(isCheckmate(b, !turn))
+                            {
+                                over = true;
+                                cout<<"Checkmate! White wins!"<<endl;
+                                break;
+                            }
+                            if(isStalemate(b, !turn))
+                            {
+                                over = true;
+                                cout<<"Stalemate! Match will end in a draw!"<<endl;
+                                break;
+                            }
 		                	turn = false;
 		                }
 		                if(!turn && isBlack(b[start.first][start.second]))
 		                {
 		                	moveFunc(b, start, end);
+                            if(isCheckmate(b, !turn))
+                            {
+                                over = true;
+                                cout<<"Checkmate! Black wins!"<<endl;
+                                break;
+                            }
+                            if(isStalemate(b, !turn))
+                            {
+                                over = true;
+                                cout<<"Stalemate! Match will end in a draw!"<<endl;
+                                break;
+                            }
 		                	turn = true;
 		                }
                     }
@@ -109,6 +134,11 @@ int main()
 
             }
         }
+        if(over)
+        {
+            break;
+            cout<<"Thanks for playing"<<endl;
+        }
         win.clear(Color::Black);
         for(int i=0; i<8; i++)
         {
@@ -117,27 +147,6 @@ int main()
                 win.draw(v[i][j]);
             }
         }
-        /*win.draw(wK);
-          win.draw(wQ);
-          win.draw(wN1);
-          win.draw(wN2);
-          win.draw(wB1);
-          win.draw(wB2);
-          win.draw(wR1);
-          win.draw(wR2);
-          win.draw(bK);
-          win.draw(bQ);
-          win.draw(bN1);
-          win.draw(bN2);
-          win.draw(bB1);
-          win.draw(bB2);
-          win.draw(bR1);
-          win.draw(bR2);
-          for(int i = 0; i < 8; i++){
-          win.draw(wP[i]);
-          win.draw(bP[i]);
-          }*/
-
         for(int i=0; i<8; i++)
         {
             for(int j=0; j<8; j++)
