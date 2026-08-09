@@ -89,10 +89,9 @@ int main()
                     flag = true;
                     if(isLegal(b, start, end))
                     {
-		                
-		                if(turn && isWhite(b[start.first][start.second]))
-		                {
-		                	moveFunc(b, start, end);
+                        if(turn && isWhite(b[start.first][start.second]))
+                        {
+                            moveFunc(b, start, end);
                             if(isCheckmate(b, !turn))
                             {
                                 over = true;
@@ -105,11 +104,11 @@ int main()
                                 cout<<"Stalemate! Match will end in a draw!"<<endl;
                                 break;
                             }
-		                	turn = false;
-		                }
-		                if(!turn && isBlack(b[start.first][start.second]))
-		                {
-		                	moveFunc(b, start, end);
+                            turn = false;
+                        }
+                        if(!turn && isBlack(b[start.first][start.second]))
+                        {
+                            moveFunc(b, start, end);
                             if(isCheckmate(b, !turn))
                             {
                                 over = true;
@@ -122,8 +121,8 @@ int main()
                                 cout<<"Stalemate! Match will end in a draw!"<<endl;
                                 break;
                             }
-		                	turn = true;
-		                }
+                            turn = true;
+                        }
                     }
                     else 
                     {
@@ -133,11 +132,6 @@ int main()
                 }
 
             }
-        }
-        if(over)
-        {
-            break;
-            cout<<"Thanks for playing"<<endl;
         }
         win.clear(Color::Black);
         for(int i=0; i<8; i++)
