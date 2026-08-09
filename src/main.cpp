@@ -1,7 +1,7 @@
 #include "texspri.h"
 #include "move_func.h"
-#include<SFML/Graphics.hpp>
-#include<iostream>
+#include <SFML/Graphics.hpp>
+#include <iostream>
 #include "move_rules.h"
 //#include "materializer.h"
 using namespace std;
@@ -48,6 +48,7 @@ int main()
 
     pair<int, int>start, end;
     bool flag = true;
+    bool turn = true;
     while(win.isOpen())
     {
         Event e;
@@ -77,7 +78,7 @@ int main()
                     {
                         cout<<"start Selected "<<p<<endl;
                         start = {row, col};   
-                        flag = false;    	
+                        flag = false;  	
                     }
                 }
                 else
@@ -85,8 +86,21 @@ int main()
                     cout<<"end Selected "<<p<<endl;
                     end = {row, col};
                     flag = true;
-                    if(isLegal(b, start, end))moveFunc(b, start, end);
-                    else
+                    if(isLegal(b, start, end) && turn)
+                    {
+		                
+		                if(turn && isWhite(b[start.first][start.second]))
+		                {
+		                	moveFunc(b, start, end);
+		                	turn = false;
+		                }
+		                if(!turn && isBlack(b[start.first][start.second]))
+		                {
+		                	moveFunc(b, start, end);
+		                	turn = true;
+		                }
+                    }
+                    else 
                     {
                         cout<<"Illegal"<<endl;
                         //grafiks
