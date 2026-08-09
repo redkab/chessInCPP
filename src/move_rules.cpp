@@ -355,7 +355,7 @@ bool hasLegalMoves(char board[8][8], pair<int, int>start)
     int dr[4] = {0, 0, 1, -1};
     int dc[4] = {1, -1, 0, 0};
 
-    int dgr[4] = {1, 1, -1 -1};
+    int dgr[4] = {1, 1, -1, -1};
     int dgc[4] = {-1, 1, -1, 1};
 
     int dnr[8] = {-2, -2, -1, -1, 1, 1, 2, 2};
