@@ -130,6 +130,7 @@ bool isValidPawnMove(char board[8][8], pair<int, int>start, pair<int, int>end)
 bool isLegal(char b[8][8], pair<int, int>start, pair<int ,int>end)
 {
     if(start == end)return false;
+    if(end.first <0 || end.first >= 8 || end.second <0 || end.second >=8)return 0;
 
     char piece = b[start.first][start.second];
     if(isTeam(piece, b[end.first][end.second]))return false;
@@ -344,4 +345,119 @@ bool isInCheck(char board[8][8], bool colour)// false = black, true = white
     return false;
 }
 
+bool hasLegalMoves(char board[8][8], pair<int, int>start)
+{
+    char p = board[start.first][start.second];
+    if(p == ' ')
+    {
+        return false;
+    }
+    int dr[4] = {0, 0, 1, -1};
+    int dc[4] = {1, -1, 0, 0};
 
+    int dgr[4] = {1, 1, -1 -1};
+    int dgc[4] = {-1, 1, -1, 1};
+
+    int dnr[8] = {-2, -2, -1, -1, 1, 1, 2, 2};
+    int dnc[8] = {-1, 1, -2, 2, -2, 2, -1, 1};
+
+    int ur = start.first, uc = start.second;
+    int r,c, delr, delc;
+
+    if(p == 'q' || p == 'Q' || p == 'r' || p == 'R')
+    {
+        for(int i=0; i<4; i++)
+        {
+            delr = dr[i];
+            delc = dc[i];
+            r = ur + delr;
+            c = uc + delc;
+
+            while(r>=0 && r<8 && c>=0 && c<8)
+            {
+                if(isTeam(p, board[r][c]))break;
+                else 
+                {
+                    if(isLegal(board, start, {r,c}))
+                    {
+                        return true;
+                    }
+                }
+                r += delr;
+                c += delc;
+            }
+        }
+    }
+
+    if(p == 'b' || p == 'B' || p == 'q' || p == 'Q')
+    {
+        for(int i=0; i<4; i++)
+        {
+            delr = dgr[i];
+            delc = dgc[i];
+            r = ur + delr;
+            c = uc + delc;
+
+            while(r>=0 && r<8 && c>=0 && c<8)
+            {
+                if(isTeam(p, board[r][c]))break;
+                else 
+                {
+                    if(isLegal(board, start, {r,c}))
+                    {
+                        return true;
+                    }
+                }
+                r += delr;
+                c += delc;
+            }
+        }
+    }
+    r = ur;
+    c = uc;
+    if(p == 'n' || p == 'N')
+    {
+        int nr, nc;
+        for(int i=0; i<8; i++)
+        {
+            nr = r + dnr[i];
+            nc = c + dnc[i];
+            if(nr>=0 && nr<8 && nc>=0 && nc<8)
+            {
+                if(isLegal(board, start, {nr, nc}))
+                {
+                    return true;
+                }
+            }
+        }
+    }
+
+    r = ur;
+    c = uc;
+
+    if(p == 'k' || p == 'K')
+    {
+        for(int i=0; i<4; i++)
+        {
+            if(isLegal(board, start, {r + dr[i], c + dc[i]}))
+            {
+                return true;
+            }
+            if(isLegal(board, start, {r + dgr[i], c + dgc[i]}))
+            {
+                return true;
+            }
+        }
+    }
+
+    if(p == 'p')
+    {
+        return (isLegal(board, start, {r+1, c-1}) || isLegal(board, start, {r+1, c}) || isLegal(board, start, {r+1, c+1}) || isLegal(board, start, {r+2, c}));
+    }
+
+    if(p == 'P')
+    {
+        return (isLegal(board, start, {r-1, c-1}) || isLegal(board, start, {r-1, c}) || isLegal(board, start, {r-1, c+1}) || isLegal(board, start, {r-2, c}));
+    }
+    return false;
+}
