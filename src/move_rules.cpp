@@ -169,11 +169,12 @@ bool isLegal(char b[8][8], pair<int, int>start, pair<int ,int>end)
         default:
                 return false;
     }
+    if(!valid)return false;
 
     char tempBoard[8][8];
     for(int i=0; i<8; i++)
     {
-        for(int j=0; j<8; i++)
+        for(int j=0; j<8; j++)
         {
             tempBoard[i][j] = b[i][j];
         }
