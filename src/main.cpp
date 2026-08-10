@@ -85,6 +85,41 @@ int main()
                 {
                     continue;
                 }
+                if(promo)
+                {
+                    int x = e.mouseButton.x;
+                    int y = e.mouseButton.y;
+                    char chosenPiece = ' ';
+                    if(y>=350 && y<450)
+                    {
+                        if(x >= 200 && x<300)
+                        {
+                            chosenPiece = 'Q';
+                        }
+                        else if(x >= 300 && x<400)
+                        {
+                            chosenPiece = 'R';
+                        }
+                        else if(x >= 400 && x<500)
+                        {
+                            chosenPiece = 'N';
+                        }
+                        else if(x >= 500 && x<600)
+                        {
+                            chosenPiece = 'B';
+                        }
+                        if(chosenPiece != ' ')
+                        {
+                            if(!whitePromo)
+                            {
+                                chosenPiece = tolower(chosenPiece);
+                            }
+                            b[promoSquare.first][promoSquare.second] = chosenPiece;
+                            promo = false;
+                        }
+                    }
+                    continue;
+                }
                 int row = e.mouseButton.y/100;
                 int col = e.mouseButton.x/100;
                 if(row>=8 || row <0 || col >=8 || col <0)
@@ -112,54 +147,18 @@ int main()
                     flag = true;
                     if(isLegal(b, start, end))
                     {
-                        if((b[start.first][start.second] == 'p' && end.first == 7) || (b[start.first][start.second] == 'P' && end.first == 0))
-                        {
-                            promo = true;
-                            promoSquare = end;
-                            whitePromo = isWhite(b[start.first][start.second]);
-                        }
-
-                        if(promo)
-                        {
-                            int x = e.mouseButton.x;
-                            int y = e.mouseButton.y;
-                            char chosenPiece = ' ';
-                            if(y>=350 && y<450)
-                            {
-                                if(x >= 200 && x<300)
-                                {
-                                    chosenPiece = 'Q';
-                                }
-                                else if(x >= 300 && x<400)
-                                {
-                                    chosenPiece = 'R';
-                                }
-                                else if(x >= 400 && x<500)
-                                {
-                                    chosenPiece = 'N';
-                                }
-                                else if(x >= 500 && x<600)
-                                {
-                                    chosenPiece = 'B';
-                                }
-                                if(chosenPiece != ' ')
-                                {
-                                    if(!whitePromo)
-                                    {
-                                        chosenPiece = tolower(chosenPiece);
-                                    }
-                                    b[start.first][start.second] = chosenPiece;
-                                    promo = false;
-                                }
-                            }
-                            continue;
-                        }
-
-
+                        char moving = b[start.first][start.second];
 
                         if(turn && isWhite(b[start.first][start.second]))
                         {
                             moveFunc(b, start, end);
+                            if(( moving == 'P' && end.first == 0))
+                            {
+                                promo = true;
+                                promoSquare = end;
+                                whitePromo = true;
+                                continue;
+                            }
                             if(isCheckmate(b, !turn))
                             {
                                 over = true;
@@ -177,6 +176,13 @@ int main()
                         if(!turn && isBlack(b[start.first][start.second]))
                         {
                             moveFunc(b, start, end);
+                            if((moving  == 'p' && end.first == 7))
+                            {
+                                promo = true;
+                                promoSquare = end;
+                                whitePromo = false;
+                                continue;
+                            }
                             if(isCheckmate(b, !turn))
                             {
                                 over = true;
