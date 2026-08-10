@@ -116,6 +116,25 @@ int main()
                             }
                             b[promoSquare.first][promoSquare.second] = chosenPiece;
                             promo = false;
+                            if(isCheckmate(b, !turn))
+                            {
+                                over = true;
+                                if(turn)
+                                {
+                                    cout << "Checkmate! White wins!" << endl;
+                                }
+                                    else
+                                    {
+                                    cout << "Checkmate! Black wins!" << endl;
+                                    }
+                            }
+                            else if(isStalemate(b, !turn))
+                            {
+                                over = true;
+                                cout << "Stalemate! Match will end in a draw!" << endl;
+                            }
+
+                            turn = !turn;
                         }
                     }
                     continue;
@@ -298,7 +317,7 @@ int main()
                 win.draw(bpb);
             }
         }
-    win.display();
+        win.display();
     }
 }
 
