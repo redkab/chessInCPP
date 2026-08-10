@@ -297,8 +297,8 @@ int main()
                 win.draw(bpn);
                 win.draw(bpb);
             }
-            win.display();
         }
+    win.display();
     }
 }
 
