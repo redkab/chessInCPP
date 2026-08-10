@@ -139,6 +139,8 @@ int main()
                     }
                     continue;
                 }
+                if(turn)cout<<"White to play\n";
+                else cout<<"Black to play\n";
                 int row = e.mouseButton.y/100;
                 int col = e.mouseButton.x/100;
                 if(row>=8 || row <0 || col >=8 || col <0)
@@ -154,14 +156,14 @@ int main()
                     }
                     else 
                     {
-                        cout<<"start Selected "<<p<<endl;
+                        //cout<<"start Selected "<<p<<endl;
                         start = {row, col};   
                         flag = false;  	
                     }
                 }
                 else
                 {
-                    cout<<"end Selected "<<p<<endl;
+                    //cout<<"end Selected "<<p<<endl;
                     end = {row, col};
                     flag = true;
                     if(isLegal(b, start, end))
