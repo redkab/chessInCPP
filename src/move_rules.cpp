@@ -131,6 +131,7 @@ bool isLegal(char b[8][8], pair<int, int>start, pair<int ,int>end)
 {
     if(start == end)return false;
     if(end.first <0 || end.first >= 8 || end.second <0 || end.second >=8)return 0;
+    if(b[end.first][end.second] == 'k' || b[end.first][end.second] == 'K')return false;
 
     char piece = b[start.first][start.second];
     if(isTeam(piece, b[end.first][end.second]))return false;
