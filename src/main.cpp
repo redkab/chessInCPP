@@ -45,6 +45,7 @@ int main()
         }
     }
 
+    vector<bool> wpMove2(8,false),bpMove2(8,false);
 
     pair<int, int>start, end;
     bool flag = true;
@@ -116,7 +117,7 @@ int main()
                             }
                             b[promoSquare.first][promoSquare.second] = chosenPiece;
                             promo = false;
-                            if(isCheckmate(b, !turn))
+                            if(isCheckmate(b, !turn,wpMove2,bpMove2))
                             {
                                 over = true;
                                 if(turn)
@@ -128,7 +129,7 @@ int main()
                                     cout << "Checkmate! Black wins!" << endl;
                                     }
                             }
-                            else if(isStalemate(b, !turn))
+                            else if(isStalemate(b, !turn,wpMove2,bpMove2))
                             {
                                 over = true;
                                 cout << "Stalemate! Match will end in a draw!" << endl;
@@ -166,27 +167,43 @@ int main()
                     //cout<<"end Selected "<<p<<endl;
                     end = {row, col};
                     flag = true;
-                    if(isLegal(b, start, end))
+                    if(isLegal(b, start, end,wpMove2,bpMove2))
                     {
                         char moving = b[start.first][start.second];
 
                         if(turn && isWhite(b[start.first][start.second]))
                         {
-                            moveFunc(b, start, end);
-                            if(( moving == 'P' && end.first == 0))
+                            for(int i=0;i<8;i++) wpMove2[i] = false;
+                            if(moving == 'P' && abs(start.second - end.second) == 1 && b[end.first][end.second] == ' ')
                             {
-                                promo = true;
-                                promoSquare = end;
-                                whitePromo = true;
-                                continue;
+                                b[start.first][end.second] = ' ';
                             }
-                            if(isCheckmate(b, !turn))
+                            moveFunc(b, start, end);
+
+                            if(moving == 'P')
+                            {
+                                if(end.first == 0)
+                                {
+                                    promo = true;
+                                    promoSquare = end;
+                                    whitePromo = true;
+                                    continue;
+                                }
+                                if(abs(start.first - end.first) == 2)
+                                {
+                                    wpMove2[start.second] = true;
+                                }
+                            }
+                            if(moving == 'P'){
+                                if(abs(start.first - end.first) == 2) wpMove2[start.second] = true;
+                            }
+                            if(isCheckmate(b, !turn,wpMove2,bpMove2))
                             {
                                 over = true;
                                 cout<<"Checkmate! White wins!"<<endl;
                                 break;
                             }
-                            if(isStalemate(b, !turn))
+                            if(isStalemate(b, !turn,wpMove2,bpMove2))
                             {
                                 over = true;
                                 cout<<"Stalemate! Match will end in a draw!"<<endl;
@@ -196,21 +213,40 @@ int main()
                         }
                         if(!turn && isBlack(b[start.first][start.second]))
                         {
-                            moveFunc(b, start, end);
-                            if((moving  == 'p' && end.first == 7))
+                            for(int i=0;i<8;i++) bpMove2[i] = false;
+                            if(moving == 'p' && abs(start.second - end.second) == 1 && b[end.first][end.second] == ' ')
                             {
-                                promo = true;
-                                promoSquare = end;
-                                whitePromo = false;
-                                continue;
+                                b[start.first][end.second] = ' ';
                             }
-                            if(isCheckmate(b, !turn))
+                            moveFunc(b, start, end);
+
+                            if(moving  == 'p')
+                            {
+                                if(end.first == 7)
+                                {
+                                    promo = true;
+                                    promoSquare = end;
+                                    whitePromo = false;
+                                    continue;
+                                }
+                                if(abs(start.first - end.first) == 2)
+                                {
+                                    bpMove2[start.second] == true;
+                                }
+                            }
+                            if(moving == 'p'){
+                                if(abs(start.first - end.first) == 2) bpMove2[start.second] = true;
+                                if(abs(start.second - end.second) == 1 && b[start.first][end.second] == 'P'){
+                                    b[start.first][end.second] = ' ';
+                                }
+                            }
+                            if(isCheckmate(b, !turn,wpMove2,bpMove2))
                             {
                                 over = true;
                                 cout<<"Checkmate! Black wins!"<<endl;
                                 break;
                             }
-                            if(isStalemate(b, !turn))
+                            if(isStalemate(b, !turn,wpMove2,bpMove2))
                             {
                                 over = true;
                                 cout<<"Stalemate! Match will end in a draw!"<<endl;

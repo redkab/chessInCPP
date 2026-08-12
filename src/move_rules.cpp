@@ -42,7 +42,7 @@ bool isValidBishopMove(char board[8][8], pair<int, int>start, pair<int, int>end)
     int delr = sgn(dr);
     int delc = sgn(dc);
     int row=start.first, col = start.second;
-    while (row + delr != end.first && col +delc != end.second)
+    while (row + delr != end.first && col + delc != end.second)
     {
         row += delr;
         col += delc;
@@ -62,6 +62,7 @@ bool isValidRookMove(char board[8][8], pair<int, int>start, pair<int, int>end)
     }
 
     int r=start.first, c=start.second;
+    //checked second time
     if(isTeam(board[r][c], board[end.first][end.second]))return false;
     if(start.first == end.first)
     {
@@ -73,8 +74,8 @@ bool isValidRookMove(char board[8][8], pair<int, int>start, pair<int, int>end)
         dr = sgn(end.first - start.first);
         dc=0;
     }
-    r +=dr;
-    c+=dc;
+    r += dr;
+    c += dc;
     while(r != end.first || c != end.second)
     {
         if(board[r][c] != ' ')return false;
@@ -89,7 +90,7 @@ bool isValidQueenMove(char board[8][8], pair<int, int>start, pair<int, int>end)
     return isValidRookMove(board, start, end) || isValidBishopMove(board, start, end);
 }
 
-bool isValidPawnMove(char board[8][8], pair<int, int>start, pair<int, int>end)
+bool isValidPawnMove(char board[8][8], pair<int, int>start, pair<int, int>end,vector<bool> &wpMove2,vector<bool> &bpMove2)
 {
     int dr, dc;
     dr = end.first - start.first;
@@ -97,7 +98,10 @@ bool isValidPawnMove(char board[8][8], pair<int, int>start, pair<int, int>end)
     char pawn = board[start.first][start.second];
     char dest = board[end.first][end.second];
     int dir, sr;
-    if(isBlack(board[start.first][start.second]))
+
+    bool black = isBlack(pawn);
+
+    if(black)
     {
         sr = 1;
         dir = 1;
@@ -108,7 +112,7 @@ bool isValidPawnMove(char board[8][8], pair<int, int>start, pair<int, int>end)
         dir = -1;
     }
 
-    if( dc == 0 && dr == dir && dest == ' ')
+    if(dc == 0 && dr == dir && dest == ' ')
     {
         return true;
     }
@@ -124,10 +128,25 @@ bool isValidPawnMove(char board[8][8], pair<int, int>start, pair<int, int>end)
         return true;
     }
 
+    //enpassant
+
+    if(dr == dir && abs(dc) == 1 && dest == ' ')
+    {
+        if(isTeam(pawn,board[start.first][end.second])) return false;
+        if(black && wpMove2[end.second] && start.first == 4)
+        {
+            return true;
+        }
+        if(!black && bpMove2[end.second] && start.first == 3)
+        {
+            return true;
+        }
+    }
+
     return false;
 }
 
-bool isLegal(char b[8][8], pair<int, int>start, pair<int ,int>end)
+bool isLegal(char b[8][8], pair<int, int>start, pair<int ,int>end,vector<bool> &wpMove2,vector<bool> &bpMove2)
 {
     if(start == end)return false;
     if(end.first <0 || end.first >= 8 || end.second <0 || end.second >=8)return 0;
@@ -166,7 +185,7 @@ bool isLegal(char b[8][8], pair<int, int>start, pair<int ,int>end)
 
         case 'P':
         case 'p':
-            valid =  isValidPawnMove(b, start, end);
+            valid =  isValidPawnMove(b, start, end,wpMove2,bpMove2);
             break;
         default:
             return false;
@@ -186,7 +205,15 @@ bool isLegal(char b[8][8], pair<int, int>start, pair<int ,int>end)
 
     tempBoard[end.first][end.second] = tempBoard[start.first][start.second];
     tempBoard[start.first][start.second] = ' ';
+
+    if((piece == 'P' || piece == 'p') && start.second != end.second && b[end.first][end.second] == ' ')
+    {
+        tempBoard[start.first][end.second] = ' ';
+    }
+    
     if(isInCheck(tempBoard, colour))return false;
+    // this will always return true cause of line 175
+    // replace valid with true
     return valid;
 }
 
@@ -221,6 +248,7 @@ bool isInCheck(char board[8][8], bool colour)// false = black, true = white
         }
         if(flag)break;
     }
+
     int ur=r, uc=c;
     for(int i=0; i<4; i++)
     {
@@ -234,10 +262,12 @@ bool isInCheck(char board[8][8], bool colour)// false = black, true = white
 
     if(colour)
     {
+        // why checking r - 1 < 8 and c - 1 < 8 ? only need >= 0
         if(r-1 >=0 && r-1 <8 && c-1 >=0 && c-1<8)
         {
             if(board[r-1][c-1] == 'p')return true;
         }
+        // why c + 1 >= 0?
         if(r-1>=0 && r-1<8 && c+1>=0 && c+1<8)
         {
             if(board[r-1][c+1] == 'p')return true;
@@ -246,16 +276,19 @@ bool isInCheck(char board[8][8], bool colour)// false = black, true = white
 
     else
     {
+        // r + 1 >= 0 and c - 1 < 8
         if(r+1 >=0 && r+1 <8 && c-1 >=0 && c-1<8)
         {
             if(board[r+1][c-1] == 'P')return true;
         }
+        // same
         if(r+1>=0 && r+1<8 && c+1>=0 && c+1<8)
         {
             if(board[r+1][c+1] == 'P')return true;
         }
     }
 
+    // maybe not change r and c ? since thats our refernce for our king always ?
     for(int i=0; i<4; i++)
     {
         r = ur + dr[i];
@@ -264,7 +297,7 @@ bool isInCheck(char board[8][8], bool colour)// false = black, true = white
         {
             char p = board[r][c];
             if(p != ' ' && isTeam(p, search))break;
-            if(p!= ' ' && !isTeam(p, search))
+            if(p != ' ' && !isTeam(p, search))
             {
                 if(colour)
                 {
@@ -291,6 +324,7 @@ bool isInCheck(char board[8][8], bool colour)// false = black, true = white
     {
         int nr = r + dgr[i];
         int nc = c + dgc[i];
+        //this was already checked in line 228
         if(nr>=0 && nr<8 && nc>=0 && nc<8)
         {
             if(board[nr][nc] == ek)return true;
@@ -346,7 +380,7 @@ bool isInCheck(char board[8][8], bool colour)// false = black, true = white
     return false;
 }
 
-bool hasLegalMoves(char board[8][8], pair<int, int>start)
+bool hasLegalMoves(char board[8][8], pair<int, int>start,std::vector<bool> &wpMove2, std::vector<bool> &bpMove2)
 {
     char p = board[start.first][start.second];
     if(p == ' ')
@@ -369,6 +403,7 @@ bool hasLegalMoves(char board[8][8], pair<int, int>start)
     {
         for(int i=0; i<4; i++)
         {
+            // why not just directly use dr[i] whats the use of delr
             delr = dr[i];
             delc = dc[i];
             r = ur + delr;
@@ -379,7 +414,7 @@ bool hasLegalMoves(char board[8][8], pair<int, int>start)
                 if(isTeam(p, board[r][c]))break;
                 else 
                 {
-                    if(isLegal(board, start, {r,c}))
+                    if(isLegal(board, start, {r,c},wpMove2,bpMove2))
                     {
                         return true;
                     }
@@ -404,7 +439,7 @@ bool hasLegalMoves(char board[8][8], pair<int, int>start)
                 if(isTeam(p, board[r][c]))break;
                 else 
                 {
-                    if(isLegal(board, start, {r,c}))
+                    if(isLegal(board, start, {r,c},wpMove2,bpMove2))
                     {
                         return true;
                     }
@@ -425,7 +460,7 @@ bool hasLegalMoves(char board[8][8], pair<int, int>start)
             nc = c + dnc[i];
             if(nr>=0 && nr<8 && nc>=0 && nc<8)
             {
-                if(isLegal(board, start, {nr, nc}))
+                if(isLegal(board, start, {nr, nc},wpMove2,bpMove2))
                 {
                     return true;
                 }
@@ -440,11 +475,11 @@ bool hasLegalMoves(char board[8][8], pair<int, int>start)
     {
         for(int i=0; i<4; i++)
         {
-            if(isLegal(board, start, {r + dr[i], c + dc[i]}))
+            if(isLegal(board, start, {r + dr[i], c + dc[i]},wpMove2,bpMove2))
             {
                 return true;
             }
-            if(isLegal(board, start, {r + dgr[i], c + dgc[i]}))
+            if(isLegal(board, start, {r + dgr[i], c + dgc[i]},wpMove2,bpMove2))
             {
                 return true;
             }
@@ -453,17 +488,18 @@ bool hasLegalMoves(char board[8][8], pair<int, int>start)
 
     if(p == 'p')
     {
-        return (isLegal(board, start, {r+1, c-1}) || isLegal(board, start, {r+1, c}) || isLegal(board, start, {r+1, c+1}) || isLegal(board, start, {r+2, c}));
+        return (isLegal(board, start, {r+1, c-1},wpMove2,bpMove2) || isLegal(board, start, {r+1, c},wpMove2,bpMove2) || isLegal(board, start, {r+1, c+1},wpMove2,bpMove2) || isLegal(board, start, {r+2, c},wpMove2,bpMove2));
     }
 
     if(p == 'P')
     {
-        return (isLegal(board, start, {r-1, c-1}) || isLegal(board, start, {r-1, c}) || isLegal(board, start, {r-1, c+1}) || isLegal(board, start, {r-2, c}));
+        return (isLegal(board, start, {r-1, c-1},wpMove2,bpMove2) || isLegal(board, start, {r-1, c},wpMove2,bpMove2) || isLegal(board, start, {r-1, c+1},wpMove2,bpMove2) || isLegal(board, start, {r-2, c},wpMove2,bpMove2));
     }
     return false;
 }
 
-bool isCheckmate(char board[8][8], bool colour)//false = black, true = white
+// i like this checking
+bool isCheckmate(char board[8][8], bool colour,std::vector<bool> &wpMove2, std::vector<bool> &bpMove2)//false = black, true = white
 {
     char t;
     if(colour)t = 'K';
@@ -476,7 +512,7 @@ bool isCheckmate(char board[8][8], bool colour)//false = black, true = white
         {
             if(isTeam(t, board[i][j]))
             {
-                if(hasLegalMoves(board, {i,j}))
+                if(hasLegalMoves(board, {i,j},wpMove2,bpMove2))
                 {
                     return false;
                 }
@@ -486,7 +522,7 @@ bool isCheckmate(char board[8][8], bool colour)//false = black, true = white
     return true;
 }
 
-bool isStalemate(char board[8][8], bool colour)
+bool isStalemate(char board[8][8], bool colour,std::vector<bool> &wpMove2, std::vector<bool> &bpMove2)
 {
     char t;
     if(colour)t = 'K';
@@ -499,7 +535,7 @@ bool isStalemate(char board[8][8], bool colour)
         {
             if(isTeam(t, board[i][j]))
             {
-                if(hasLegalMoves(board, {i,j}))
+                if(hasLegalMoves(board, {i,j},wpMove2,bpMove2))
                 {
                     return false;
                 }
