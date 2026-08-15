@@ -62,8 +62,6 @@ bool isValidRookMove(char board[8][8], pair<int, int>start, pair<int, int>end)
     }
 
     int r=start.first, c=start.second;
-    //checked second time
-    if(isTeam(board[r][c], board[end.first][end.second]))return false;
     if(start.first == end.first)
     {
         dr=0;
@@ -212,8 +210,6 @@ bool isLegal(char b[8][8], pair<int, int>start, pair<int ,int>end,vector<bool> &
     }
     
     if(isInCheck(tempBoard, colour))return false;
-    // this will always return true cause of line 175
-    // replace valid with true
     return valid;
 }
 
@@ -262,12 +258,10 @@ bool isInCheck(char board[8][8], bool colour)// false = black, true = white
 
     if(colour)
     {
-        // why checking r - 1 < 8 and c - 1 < 8 ? only need >= 0
         if(r-1 >=0 && r-1 <8 && c-1 >=0 && c-1<8)
         {
             if(board[r-1][c-1] == 'p')return true;
         }
-        // why c + 1 >= 0?
         if(r-1>=0 && r-1<8 && c+1>=0 && c+1<8)
         {
             if(board[r-1][c+1] == 'p')return true;
@@ -276,19 +270,16 @@ bool isInCheck(char board[8][8], bool colour)// false = black, true = white
 
     else
     {
-        // r + 1 >= 0 and c - 1 < 8
         if(r+1 >=0 && r+1 <8 && c-1 >=0 && c-1<8)
         {
             if(board[r+1][c-1] == 'P')return true;
         }
-        // same
         if(r+1>=0 && r+1<8 && c+1>=0 && c+1<8)
         {
             if(board[r+1][c+1] == 'P')return true;
         }
     }
 
-    // maybe not change r and c ? since thats our refernce for our king always ?
     for(int i=0; i<4; i++)
     {
         r = ur + dr[i];
@@ -324,7 +315,6 @@ bool isInCheck(char board[8][8], bool colour)// false = black, true = white
     {
         int nr = r + dgr[i];
         int nc = c + dgc[i];
-        //this was already checked in line 228
         if(nr>=0 && nr<8 && nc>=0 && nc<8)
         {
             if(board[nr][nc] == ek)return true;
@@ -403,7 +393,6 @@ bool hasLegalMoves(char board[8][8], pair<int, int>start,std::vector<bool> &wpMo
     {
         for(int i=0; i<4; i++)
         {
-            // why not just directly use dr[i] whats the use of delr
             delr = dr[i];
             delc = dc[i];
             r = ur + delr;
